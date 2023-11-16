@@ -22,7 +22,9 @@ type Query {
     ): [User!]! @paginate(defaultCount: 10)
 
     posts: [Post!]! @paginate(defaultCount: 10) @orderBy(column:"created_at", direction: DESC)
+    postsResolver: [Post!]!
     post(id: ID @eq): Post @find
+    postResolver(id: ID!): Post
 }
 
 type Mutation {
@@ -32,6 +34,11 @@ type Mutation {
         title: String! @rules(apply: ["required", "min:3" ])
         description: String! @rules(apply: ["required", "min:3" ])
     ): Post @create
+    createPostResolver(
+        user_id: ID!
+        title: String! @rules(apply: ["required", "min:3" ])
+        description: String! @rules(apply: ["required", "min:3" ])
+    ): Post 
 
     updatePost(
         id: ID!
